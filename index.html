@@ -145,20 +145,6 @@
     font-size: 0.88rem;
     color: rgba(255, 255, 255, 0.86);
   }
-  .chip {
-    position: absolute !important;
-    top: 14px;
-    left: 14px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.38);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    color: #ffffff;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-  }
 
   a:focus-visible, input:focus-visible {
     outline: 3px solid #ffffff;
@@ -176,44 +162,38 @@
 <div class="wrap">
 
   <header>
-    <h1>What are we watching?</h1>
+    <h1>de la O's Media</h1>
     <div class="lookup">
       <label for="title-search">Find which service has a title</label>
       <input id="title-search" type="search" placeholder="Movie or show name" autocomplete="off">
-      <a id="title-go" href="https://www.justwatch.com/">Search JustWatch</a>
+      <a id="title-go" href="https://www.justwatch.com/">Search</a>
     </div>
   </header>
 
   <section aria-labelledby="h-subs">
-    <h2 id="h-subs">Your subscriptions</h2>
+    <h2 id="h-subs">Subscriptions</h2>
     <div class="grid">
       <a class="tile" style="--a:#3a3a40;--b:#0e0e11" href="https://tv.apple.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">Apple TV</span>
         <span class="what">Apple originals: series, films and documentaries.</span>
       </a>
       <a class="tile" style="--a:#b3121d;--b:#3d0509" href="https://www.netflix.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">Netflix</span>
         <span class="what">Originals, series and a rotating film catalog.</span>
       </a>
       <a class="tile" style="--a:#5b2bd6;--b:#170a45" href="https://www.hbomax.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">HBO Max</span>
         <span class="what">HBO series, Warner films and prestige TV.</span>
       </a>
       <a class="tile" style="--a:#1273c9;--b:#0a2444" href="https://www.amazon.com/gp/video/storefront">
-        <span class="chip">Your subscription</span>
         <span class="name">Prime Video</span>
         <span class="what">Included films and shows, plus rentals.</span>
       </a>
       <a class="tile" style="--a:#8a6a12;--b:#1c1a2e" href="https://www.peacocktv.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">Peacock</span>
         <span class="what">NBC and Universal shows, films and live sports.</span>
       </a>
       <a class="tile" style="--a:#0f6f8f;--b:#082a3a" href="https://stream.directv.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">DirecTV Stream</span>
         <span class="what">Live cable channels, news and sports.</span>
       </a>
@@ -224,27 +204,22 @@
     <h2 id="h-video">Free movies and TV</h2>
     <div class="grid">
       <a class="tile" style="--a:#7a2bd0;--b:#2a0b52" href="https://tubitv.com/">
-        <span class="chip">Free with ads</span>
         <span class="name">Tubi</span>
         <span class="what">The biggest free catalog of mainstream movies and shows.</span>
       </a>
       <a class="tile" style="--a:#3d3f52;--b:#12131c" href="https://pluto.tv/">
-        <span class="chip">Free with ads</span>
         <span class="name">Pluto TV</span>
         <span class="what">Live themed channels, like flipping through cable.</span>
       </a>
       <a class="tile" style="--a:#a86a08;--b:#2b1c05" href="https://watch.plex.tv/">
-        <span class="chip">Free with ads</span>
         <span class="name">Plex</span>
         <span class="what">More free movies, shows and live channels.</span>
       </a>
       <a class="tile" style="--a:#a3352a;--b:#2e0e0b" href="https://www.kanopy.com/">
-        <span class="chip">Library card</span>
         <span class="name">Kanopy</span>
         <span class="what">Indie films, classics and documentaries with no ads.</span>
       </a>
       <a class="tile" style="--a:#1767b8;--b:#0a2140" href="https://www.hoopladigital.com/">
-        <span class="chip">Library card</span>
         <span class="name">Hoopla</span>
         <span class="what">Movies, shows, albums and audiobooks on loan.</span>
       </a>
@@ -252,20 +227,17 @@
   </section>
 
   <section aria-labelledby="h-docs">
-    <h2 id="h-docs">Documentaries and video</h2>
+    <h2 id="h-docs">Documentaries and Video</h2>
     <div class="grid">
       <a class="tile" style="--a:#c0261c;--b:#3a0b08" href="https://www.youtube.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">YouTube</span>
         <span class="what">Everything else, without ads on your Premium plan.</span>
       </a>
       <a class="tile" style="--a:#1f5fae;--b:#0b1f3d" href="https://www.pbs.org/video/">
-        <span class="chip">Free</span>
         <span class="name">PBS</span>
         <span class="what">Science, history and news documentaries.</span>
       </a>
       <a class="tile" style="--a:#4a4d57;--b:#15161b" href="https://archive.org/details/movies">
-        <span class="chip">Free</span>
         <span class="name">Internet Archive</span>
         <span class="what">Public-domain films, newsreels and old TV.</span>
       </a>
@@ -273,15 +245,13 @@
   </section>
 
   <section aria-labelledby="h-audio">
-    <h2 id="h-audio">Music and podcasts</h2>
+    <h2 id="h-audio">Music</h2>
     <div class="grid">
       <a class="tile" style="--a:#178a45;--b:#06281a" href="https://open.spotify.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">Spotify</span>
         <span class="what">Your music, playlists and podcasts.</span>
       </a>
       <a class="tile" style="--a:#b81f3a;--b:#330812" href="https://music.youtube.com/">
-        <span class="chip">Your subscription</span>
         <span class="name">YouTube Music</span>
         <span class="what">Included with YouTube Premium. Good for live sets and remixes.</span>
       </a>
