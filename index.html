@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home Media Launcher</title>
+<style>
+  /* Layout idea: a living-room TV home screen. Black stage, frosted lookup pill,
+     shelves of wide colour cards that lift toward you on hover or focus.
+     Single dark theme by choice. */
+  :root {
+    --bg: #000000;
+    --stage: #0b0b0f;
+    --ink: #f5f5f7;
+    --muted: #a1a1a8;
+    --glass: rgba(255, 255, 255, 0.09);
+    --glass-line: rgba(255, 255, 255, 0.16);
+    --accent: #2f8cff;
+    --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background:
+      radial-gradient(1100px 520px at 50% -160px, #1d2740 0%, rgba(11, 11, 15, 0) 70%),
+      var(--bg);
+    background-repeat: no-repeat;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  header { display: flex; flex-direction: column; gap: 20px; }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .lookup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: stretch;
+    max-width: 640px;
+  }
+  .lookup label {
+    flex-basis: 100%;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .lookup input {
+    flex: 1 1 220px;
+    min-width: 0;
+    font: inherit;
+    color: var(--ink);
+    background: var(--glass);
+    border: 1px solid var(--glass-line);
+    border-radius: 999px;
+    padding: 12px 20px;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+  .lookup input::placeholder { color: var(--muted); }
+  .lookup a {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--ink);
+    color: #000000;
+    border-radius: 999px;
+    padding: 12px 22px;
+  }
+
+  section { display: flex; flex-direction: column; gap: 14px; }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+    aspect-ratio: 16 / 9;
+    min-height: 150px;
+    padding: 18px;
+    border-radius: 18px;
+    background: linear-gradient(140deg, var(--a), var(--b));
+    color: #ffffff;
+    text-decoration: none;
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+    transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease;
+  }
+  .tile::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.42) 100%);
+    pointer-events: none;
+  }
+  .tile > * { position: relative; }
+  .tile:hover, .tile:focus-visible {
+    transform: scale(1.045);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+  }
+  .tile .name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  .tile .what {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .chip {
+    position: absolute !important;
+    top: 14px;
+    left: 14px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #ffffff;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  a:focus-visible, input:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+  }
+  footer { color: var(--muted); font-size: 0.88rem; max-width: 65ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tile { transition: none; }
+    .tile:hover, .tile:focus-visible { transform: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>What are we watching?</h1>
+    <div class="lookup">
+      <label for="title-search">Find which service has a title</label>
+      <input id="title-search" type="search" placeholder="Movie or show name" autocomplete="off">
+      <a id="title-go" href="https://www.justwatch.com/">Search JustWatch</a>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-subs">
+    <h2 id="h-subs">Your subscriptions</h2>
+    <div class="grid">
+      <a class="tile" style="--a:#3a3a40;--b:#0e0e11" href="https://tv.apple.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">Apple TV</span>
+        <span class="what">Apple originals: series, films and documentaries.</span>
+      </a>
+      <a class="tile" style="--a:#b3121d;--b:#3d0509" href="https://www.netflix.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">Netflix</span>
+        <span class="what">Originals, series and a rotating film catalog.</span>
+      </a>
+      <a class="tile" style="--a:#5b2bd6;--b:#170a45" href="https://www.hbomax.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">HBO Max</span>
+        <span class="what">HBO series, Warner films and prestige TV.</span>
+      </a>
+      <a class="tile" style="--a:#1273c9;--b:#0a2444" href="https://www.amazon.com/gp/video/storefront">
+        <span class="chip">Your subscription</span>
+        <span class="name">Prime Video</span>
+        <span class="what">Included films and shows, plus rentals.</span>
+      </a>
+      <a class="tile" style="--a:#8a6a12;--b:#1c1a2e" href="https://www.peacocktv.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">Peacock</span>
+        <span class="what">NBC and Universal shows, films and live sports.</span>
+      </a>
+      <a class="tile" style="--a:#0f6f8f;--b:#082a3a" href="https://stream.directv.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">DirecTV Stream</span>
+        <span class="what">Live cable channels, news and sports.</span>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-video">
+    <h2 id="h-video">Free movies and TV</h2>
+    <div class="grid">
+      <a class="tile" style="--a:#7a2bd0;--b:#2a0b52" href="https://tubitv.com/">
+        <span class="chip">Free with ads</span>
+        <span class="name">Tubi</span>
+        <span class="what">The biggest free catalog of mainstream movies and shows.</span>
+      </a>
+      <a class="tile" style="--a:#3d3f52;--b:#12131c" href="https://pluto.tv/">
+        <span class="chip">Free with ads</span>
+        <span class="name">Pluto TV</span>
+        <span class="what">Live themed channels, like flipping through cable.</span>
+      </a>
+      <a class="tile" style="--a:#a86a08;--b:#2b1c05" href="https://watch.plex.tv/">
+        <span class="chip">Free with ads</span>
+        <span class="name">Plex</span>
+        <span class="what">More free movies, shows and live channels.</span>
+      </a>
+      <a class="tile" style="--a:#a3352a;--b:#2e0e0b" href="https://www.kanopy.com/">
+        <span class="chip">Library card</span>
+        <span class="name">Kanopy</span>
+        <span class="what">Indie films, classics and documentaries with no ads.</span>
+      </a>
+      <a class="tile" style="--a:#1767b8;--b:#0a2140" href="https://www.hoopladigital.com/">
+        <span class="chip">Library card</span>
+        <span class="name">Hoopla</span>
+        <span class="what">Movies, shows, albums and audiobooks on loan.</span>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-docs">
+    <h2 id="h-docs">Documentaries and video</h2>
+    <div class="grid">
+      <a class="tile" style="--a:#c0261c;--b:#3a0b08" href="https://www.youtube.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">YouTube</span>
+        <span class="what">Everything else, without ads on your Premium plan.</span>
+      </a>
+      <a class="tile" style="--a:#1f5fae;--b:#0b1f3d" href="https://www.pbs.org/video/">
+        <span class="chip">Free</span>
+        <span class="name">PBS</span>
+        <span class="what">Science, history and news documentaries.</span>
+      </a>
+      <a class="tile" style="--a:#4a4d57;--b:#15161b" href="https://archive.org/details/movies">
+        <span class="chip">Free</span>
+        <span class="name">Internet Archive</span>
+        <span class="what">Public-domain films, newsreels and old TV.</span>
+      </a>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-audio">
+    <h2 id="h-audio">Music and podcasts</h2>
+    <div class="grid">
+      <a class="tile" style="--a:#178a45;--b:#06281a" href="https://open.spotify.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">Spotify</span>
+        <span class="what">Your music, playlists and podcasts.</span>
+      </a>
+      <a class="tile" style="--a:#b81f3a;--b:#330812" href="https://music.youtube.com/">
+        <span class="chip">Your subscription</span>
+        <span class="name">YouTube Music</span>
+        <span class="what">Included with YouTube Premium. Good for live sets and remixes.</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    Kanopy and Hoopla only work if your public library takes part. Catalogs change often, so use the search above before renting or assuming a title is gone.
+  </footer>
+
+</div>
+<script>
+  (function () {
+    var input = document.getElementById('title-search');
+    var go = document.getElementById('title-go');
+    function sync() {
+      var q = input.value.trim();
+      go.href = q
+        ? 'https://www.justwatch.com/us/search?q=' + encodeURIComponent(q)
+        : 'https://www.justwatch.com/';
+    }
+    input.addEventListener('input', sync);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { sync(); go.click(); }
+    });
+  })();
+</script>
+</body>
+</html>
