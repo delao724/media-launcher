@@ -61,11 +61,6 @@
     align-items: stretch;
     max-width: 640px;
   }
-  .lookup label {
-    flex-basis: 100%;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
   .lookup input {
     flex: 1 1 220px;
     min-width: 0;
@@ -163,8 +158,7 @@
   <header>
     <h1>de la O's Media</h1>
     <div class="lookup">
-      <label for="title-search">Find which service has a title</label>
-      <input id="title-search" type="search" placeholder="Movie or show name" autocomplete="off">
+      <input id="title-search" type="search" aria-label="Search for a movie or show" placeholder="Movie or show name" autocomplete="off">
       <a id="title-go" href="https://www.justwatch.com/">Search</a>
     </div>
   </header>
